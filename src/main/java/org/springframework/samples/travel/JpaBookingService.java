@@ -143,10 +143,7 @@ public class JpaBookingService implements BookingService {
                 result.add(hotel);
             }
         }
-        
-        //perform full table calculation
-        List avgPrice = em.createQuery("SELECT h.country, AVG(h.price) FROM Hotel h GROUP BY h.country").getResultList();
-        
+
         return result;
     }
 }
