@@ -2,11 +2,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
 	<groupId>org.springframework.samples</groupId>
 	<artifactId>travel</artifactId>
-	<name>travel</name>
-	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
+	<packaging>war</packaging>
+
+	<name>travel</name>
+
 	<properties>
 		<java-version>1.6</java-version>
 		<org.springframework-version>3.0.5.RELEASE</org.springframework-version>
@@ -15,6 +18,38 @@
 		<org.aspectj-version>1.6.9</org.aspectj-version>
 		<org.slf4j-version>1.6.1</org.slf4j-version>
 	</properties>
+
+	<repositories>
+		<!-- For testing against latest Spring snapshots -->
+		<repository>
+			<id>org.springframework.maven.snapshot</id>
+			<name>Spring Maven Snapshot Repository</name>
+			<url>http://maven.springframework.org/snapshot</url>
+			<releases><enabled>false</enabled></releases>
+			<snapshots><enabled>true</enabled></snapshots>
+		</repository>
+		<!-- For developing against latest Spring milestones -->
+        <repository>
+			<id>org.springframework.maven.milestone</id>
+			<name>Spring Maven Milestone Repository</name>
+			<url>http://maven.springframework.org/milestone</url>
+			<snapshots><enabled>false</enabled></snapshots>
+		</repository>
+		<!-- For Roo -->
+        <repository>
+            <id>spring-roo-repository</id>
+            <name>Spring Roo Repository</name>
+            <url>http://spring-roo-repository.springsource.org/release</url>
+        </repository>           
+        <!-- For Hibernate -->
+		<repository>
+			<id>org.jboss.repository.releases</id>
+			<name>JBoss Maven Release Repository</name>                     
+			<url>https://repository.jboss.org/nexus/content/repositories/releases</url>
+			<snapshots><enabled>false</enabled></snapshots>
+		</repository>		
+	</repositories>
+
 	<dependencies>	
 		<!-- Spring -->
 		<dependency>
@@ -222,37 +257,44 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	<repositories>
-		<!-- For testing against latest Spring snapshots -->
-		<repository>
-			<id>org.springframework.maven.snapshot</id>
-			<name>Spring Maven Snapshot Repository</name>
-			<url>http://maven.springframework.org/snapshot</url>
-			<releases><enabled>false</enabled></releases>
-			<snapshots><enabled>true</enabled></snapshots>
-		</repository>
-		<!-- For developing against latest Spring milestones -->
-        <repository>
-			<id>org.springframework.maven.milestone</id>
-			<name>Spring Maven Milestone Repository</name>
-			<url>http://maven.springframework.org/milestone</url>
-			<snapshots><enabled>false</enabled></snapshots>
-		</repository>
-		<!-- For Roo -->
-        <repository>
-            <id>spring-roo-repository</id>
-            <name>Spring Roo Repository</name>
-            <url>http://spring-roo-repository.springsource.org/release</url>
-        </repository>           
-        <!-- For Hibernate -->
-		<repository>
-			<id>org.jboss.repository.releases</id>
-			<name>JBoss Maven Release Repository</name>                     
-			<url>https://repository.jboss.org/nexus/content/repositories/releases</url>
-			<snapshots><enabled>false</enabled></snapshots>
-		</repository>		
-	</repositories>
+
 	<build>
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.codehaus.mojo
+										</groupId>
+										<artifactId>
+											aspectj-maven-plugin
+										</artifactId>
+										<versionRange>
+											[1.2,)
+										</versionRange>
+										<goals>
+											<goal>compile</goal>
+											<goal>test-compile</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 		<plugins>
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>
@@ -335,41 +377,5 @@
 				<version>1.0-beta-1</version>
 			</plugin>						
 		</plugins>
-		<pluginManagement>
-			<plugins>
-				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
-				<plugin>
-					<groupId>org.eclipse.m2e</groupId>
-					<artifactId>lifecycle-mapping</artifactId>
-					<version>1.0.0</version>
-					<configuration>
-						<lifecycleMappingMetadata>
-							<pluginExecutions>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>
-											org.codehaus.mojo
-										</groupId>
-										<artifactId>
-											aspectj-maven-plugin
-										</artifactId>
-										<versionRange>
-											[1.2,)
-										</versionRange>
-										<goals>
-											<goal>compile</goal>
-											<goal>test-compile</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore></ignore>
-									</action>
-								</pluginExecution>
-							</pluginExecutions>
-						</lifecycleMappingMetadata>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
 	</build>
 </project>
